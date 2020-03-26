@@ -1,6 +1,6 @@
 # onlinetimer.github.io
 
-https://onlinetimer.github.io/
+https://onlineTimer.github.io/
 
 Perfect for lazy people like me! Online Timer visualy shows how much of your day has been wasted! 
 
