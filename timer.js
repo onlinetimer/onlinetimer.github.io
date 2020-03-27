@@ -77,7 +77,7 @@ function setup(){
 }
 
 function aboutpage(){
-window.open("file:///home/jabre/online_marty/about.html", "_blank");
+window.open("https://onlinetimer.github.io/about", "_blank");
 }
 
 function b4(){
