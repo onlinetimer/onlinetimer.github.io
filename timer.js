@@ -77,7 +77,7 @@ function setup(){
 }
 
 function aboutpage(){
-window.open("https://onlinetimer.github.io/about", "_blank");
+window.open("https://onlinetimer.github.io/about.html", "_blank");
 }
 
 function b4(){
