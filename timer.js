@@ -29,6 +29,14 @@ function setup(){
 	button1.style("color", WHITE);
 	button1.mousePressed(delo);
 	
+	button5 = createButton("About & Tutorial");
+	button5.parent('timer');
+	button5.position(X-220,2);
+	button5.style("background-color",BACKGROUND);
+	button5.style("color", WHITE);
+	button5.style("font-size", 21+"px");
+	button5.mousePressed(aboutpage);
+
 	button2 = createButton("☀");
 	button2.parent('timer');
 	button2.position(X-40,2);
@@ -53,6 +61,9 @@ function setup(){
 	button4.style("color", WHITE);
 	button4.mousePressed(goalminus);
 	
+
+
+
 	button2.mouseOver(b4);
 	delo();
 	wk = 0;
@@ -64,6 +75,11 @@ function setup(){
 	windowResized();
 
 }
+
+function aboutpage(){
+window.open("file:///home/jabre/online_marty/about.html", "_blank");
+}
+
 function b4(){
 	var tid = setInterval(function(){
 		textSize(16);
@@ -79,13 +95,21 @@ function b4(){
 function windowResized() {
 	X = windowWidth;
 	Y = windowHeight;
+	console.log(X,Y);
 	if(X>Y){
-		X = Y-10;}
+		if (Y<600){
+			X = X-10;
+		}
+		else{
+		X = Y-10;}}
 	Y = Y-10;
   	resizeCanvas(X,Y);
 	button2.position(X-40,2);
 	button3.position(200,Y-98);
-	button4.position(200,Y-84);}
+	button4.position(200,Y-84);
+	button5.position(X-220,2);
+	R = Math.min(X,Y);
+}
 function goalplus(){
 	goal ++;}
 function goalminus(){
@@ -95,8 +119,6 @@ function darkmode(){
 		BACKGROUND = color(20,20,20);// color(180,150,200);
 		darkmode = false;
 		button2.style("color", WHITE);
-		button3.style("color", WHITE);
-		button4.style("color", WHITE);
 	}
 	else{
 		darkmode = true;
@@ -111,6 +133,7 @@ function darkmode(){
 	button2.style("background-color",BACKGROUND);
 	button3.style("background-color",BACKGROUND);
 	button4.style("background-color",BACKGROUND);
+	button5.style("background-color",BACKGROUND);
 
 
 }
@@ -130,7 +153,7 @@ function draw() {
 	work = 0;
 	background(BACKGROUND);
 	for (x = 0; x < 5; x++){
-		fill(100,x*50,255);
+		fill(100+10*x,x*50,255-x*5);
 		text("TIMER! ヽ(•ᴗ•ヽ) ",20+x,42-x);}
 	d = new Date();
 	minute = d.getMinutes();
@@ -146,20 +169,20 @@ function draw() {
 		if (i == 0){ // draw arc from the start of the day to the first time stamp 
 			stroke(WHITE);
 			fill(WHITE)
-			arc(X/2, Y/2, X/1.2,X/1.2, (-PI/2), (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
+			arc(X/2, Y/2, R/1.2,R/1.2, (-PI/2), (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 
 		}
 		else if(i%2 == 0 && a[i-1]!=a[i]){
 			stroke(GREEN);
 			fill(GREEN);
-			arc(X/2, Y/2, X/1.2,X/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
+			arc(X/2, Y/2, R/1.2,R/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 			if (i != a.length){
 				work += (a[i] - a[i-1]);}
 		}
 		else if(i%2 == 1 && a[i-1]!=a[i]){
 			stroke(WHITE);
 			fill(WHITE);
-			arc(X/2, Y/2, X/1.2,X/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
+			arc(X/2, Y/2, R/1.2,R/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 
 		}
 
@@ -181,7 +204,7 @@ function draw() {
 					work += (ctime - a[i]);}
 				}
 			if ( a[i] != ctime){
-				arc(X/2, Y/2, X/1.2,X/1.2,  (-PI/2)+ (a[i]/(24*60))*(2*PI),  (-PI/2)+(ctime/(24*60))*(2*PI) , PIE);
+				arc(X/2, Y/2, R/1.2,R/1.2,  (-PI/2)+ (a[i]/(24*60))*(2*PI),  (-PI/2)+(ctime/(24*60))*(2*PI) , PIE);
 				fill(BACKGROUND);
 
 			}
