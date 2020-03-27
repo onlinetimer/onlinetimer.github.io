@@ -77,7 +77,7 @@ function setup(){
 }
 
 function aboutpage(){
-window.open("https://onlinetimer.github.io/about");
+window.open("https://onlinetimer.github.io/about.html");
 }
 
 function b4(){
@@ -95,9 +95,8 @@ function b4(){
 function windowResized() {
 	X = windowWidth;
 	Y = windowHeight;
-	console.log(X,Y);
 	if(X>Y){
-		if (Y<600){
+		if (Y<750){
 			X = X-10;
 		}
 		else{
@@ -119,6 +118,7 @@ function darkmode(){
 		BACKGROUND = color(20,20,20);// color(180,150,200);
 		darkmode = false;
 		button2.style("color", WHITE);
+		document.body.style.background = "#141414";
 	}
 	else{
 		darkmode = true;
@@ -127,6 +127,7 @@ function darkmode(){
 		//BACKGROUND = color(180,150,200); //lightpurple
 		BACKGROUND = color(184, 215, 239);//lightblue	
 		//BACKGROUND = color(239, 184, 207);//lightpink
+	document.body.style.background = "#b8d7ef";
 	button2.style("color", BLACK);
 	}
 	button1.style("background-color",BACKGROUND);
@@ -144,7 +145,7 @@ function delo(){
 	sec = d.getSeconds();
 	ctime = hour*60+minute;
 	a.push(ctime);
-	console.log("timestamp: ",a);
+	console.log(" o(*ﾟ▽ﾟ*)o timestamp:",a);
 }
 
 function draw() {
