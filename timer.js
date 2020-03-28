@@ -72,6 +72,7 @@ function setup(){
 	startTimer = 0;
 	darkmode = false;
 	goal = 0;
+	midnight = true;
 	windowResized();
 
 }
@@ -165,8 +166,9 @@ function draw() {
 	noStroke()
 	ctime = hour*60 +minute;
 	for (i = 0; i <= a.length; i++){
-		if (a[i]> ctime){ // midnight!! weird bugs appear when clock jumps to 0, so the page just reloads
-			window.location.reload(false); }
+		if (a[i] > ctime && midnight == true){ // midnight!! weird bugs appear when clock jumps to 0, so the page just reloads
+			window.location.reload(false);
+			midnight =false } //this was added, since it wasnt able to refresh.. to many request per second..
 		if (i == 0){ // draw arc from the start of the day to the first time stamp 
 			stroke(WHITE);
 			fill(WHITE)
