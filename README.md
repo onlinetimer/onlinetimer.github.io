@@ -4,6 +4,8 @@ https://onlineTimer.github.io/
 
 Perfect for lazy people like me! Online Timer visualy shows how much of your day has been wasted! 
 
+yt video here: https://youtu.be/pMibQdEh-wg
+
 Finally made myself a proper timer to track my studying. 
 I tried many different things, but none motivated me to study more than this timer has.
 
