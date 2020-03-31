@@ -145,6 +145,8 @@ function windowResized() {
 	button4.position(200,Y-84);
 	button5.position(X-220,2);
 	button6.position(X-220,34);
+	button7.position(X/2-70,Y-45);
+
 	R = Math.min(X,Y);
 }
 function goalplus(){
