@@ -15,12 +15,15 @@ function setup(){
 	myCanvas = createCanvas(X,Y );
 	myCanvas.parent('timer');
 	
-	BLACK = color(  0,   0,   0);
+	BLACK = color(  20,   20,   20);
 	WHITE = color(255, 255, 255);
 	BLUE =  color(  100,   0, 255);
+	LIGHTBLUE = color(184, 215, 239);
 	GREEN = color(53, 227, 155);//(  0, 255,  80); //original green
 	BACKGROUND = color(20,20,20)// color(180,150,200) 255, 230, 255 ;
 	
+
+
 	button1 = createButton('START/STOP');
 	button1.parent('timer');
 	button1.position(21, 21+35);
@@ -28,14 +31,6 @@ function setup(){
 	button1.style("font-size", 30+ "px");
 	button1.style("color", WHITE);
 	button1.mousePressed(delo);
-	
-	button5 = createButton("About & Tutorial");
-	button5.parent('timer');
-	button5.position(X-220,2);
-	button5.style("background-color",BACKGROUND);
-	button5.style("color", WHITE);
-	button5.style("font-size", 21+"px");
-	button5.mousePressed(aboutpage);
 
 	button2 = createButton("☀");
 	button2.parent('timer');
@@ -61,11 +56,35 @@ function setup(){
 	button4.style("color", WHITE);
 	button4.mousePressed(goalminus);
 	
+	button5 = createButton("About & Tutorial");
+	button5.parent('timer');
+	button5.position(X-220,2);
+	button5.style("background-color",BACKGROUND);
+	button5.style("color", WHITE);
+	button5.style("font-size", 21+"px");
+	button5.mousePressed(aboutpage);
+
+	button6 = createButton("✿ Your weekly review");
+	button6.parent('timer');
+	button6.position(X-224,34);
+	button6.style("background-color",BACKGROUND);
+	button6.style("color", WHITE);
+	button6.style("font-size", 20+"px");
+	button6.mousePressed(reviewpage);
+
+	button7 = createButton("clear");
+	button7.parent('timer');
+	button7.position(X/2-70,Y-45);
+	button7.style("background-color",BACKGROUND);
+	button7.style("color", WHITE);
+	button7.style("font-size", 20+"px");
+	button7.mousePressed(clearday);
 
 
-
-	button2.mouseOver(b4);
-	delo();
+	a = checkcookie();
+	if (a.length == 0){
+		delo();
+	}
 	wk = 0;
 	wrn = false;
 	wst = false;
@@ -76,21 +95,39 @@ function setup(){
 
 }
 
+function checkcookie(){
+	weekdata = readcookie();
+	if(weekdata.length != 0){
+		if( weekdata[weekdata.length-1].substr(0,daymonth.length) == daymonth){ // cookie already exists
+			a = weekdata[weekdata.length-1].substr(11, weekdata[weekdata.length-1].length).split(':').map(Number);
+		}
+
+	}
+	else{
+		a = []
+	}
+	return a;
+}
+
+function clearday(){
+	var result = confirm("Are you sure you want to reset the timer? \nTotal time will be 0.");
+	if (result) {
+		a = []
+		createcookie();
+		delo();
+	}
+}
+
 function aboutpage(){
 window.open("https://onlinetimer.github.io/about.html");
 }
-
-function b4(){
-	var tid = setInterval(function(){
-		textSize(16);
-		fill(BACKGROUND);
-		rect(X-124,27,100,30);
-		fill(WHITE);
-		text("(dark/light)",X-120,50)},10);
-	setTimeout(function(){
-     		clearInterval(tid)},300);
+function reviewpage(){
+	if (wrn == false){
+  		delo();
+	}
+    delo(); //two times, so that the timer state doesnt change
+	window.open("https://onlinetimer.github.io/review.html");
 }
-
 
 function windowResized() {
 	X = windowWidth;
@@ -107,15 +144,18 @@ function windowResized() {
 	button3.position(200,Y-98);
 	button4.position(200,Y-84);
 	button5.position(X-220,2);
+	button6.position(X-220,34);
 	R = Math.min(X,Y);
 }
 function goalplus(){
-	goal ++;}
+	if (goal < 24){
+	goal ++;}}
 function goalminus(){
-	goal --;}
+	if (goal > 0){
+	goal --;}}
 function darkmode(){
 	if (darkmode){
-		BACKGROUND = color(20,20,20);// color(180,150,200);
+		BACKGROUND = BLACK;// color(180,150,200);
 		darkmode = false;
 		button2.style("color", WHITE);
 		document.body.style.background = "#141414";
@@ -125,7 +165,7 @@ function darkmode(){
 		//BACKGROUND = color(180,150,200);//darkerpink // few different pastel colors
 		//BACKGROUND = color(151, 151, 200);//blue
 		//BACKGROUND = color(180,150,200); //lightpurple
-		BACKGROUND = color(184, 215, 239);//lightblue	
+		BACKGROUND = LIGHTBLUE;//lightblue	
 		//BACKGROUND = color(239, 184, 207);//lightpink
 	document.body.style.background = "#b8d7ef";
 	button2.style("color", BLACK);
@@ -135,9 +175,17 @@ function darkmode(){
 	button3.style("background-color",BACKGROUND);
 	button4.style("background-color",BACKGROUND);
 	button5.style("background-color",BACKGROUND);
+	button6.style("background-color",BACKGROUND);
 
 
 }
+window.onbeforeunload = function () {
+	if (wrn == false){
+  		delo();
+	}
+    delo(); //two times, so that the timer state doesnt change
+}
+
 function delo(){
 	d = new Date();
 	minute = d.getMinutes();
@@ -146,7 +194,69 @@ function delo(){
 	ctime = hour*60+minute;
 	a.push(ctime);
 	console.log(" o(*ﾟ▽ﾟ*)o timestamp:",a);
+	createcookie();
+
 }
+
+function readcookie(){
+	d = new Date();
+	weekdata = [];
+	month = d.getMonth();
+	day = d.getDate() - 0;
+	year = d.getFullYear();
+	daymonth = addZero(month).toString()+"/"+addZero(day).toString()+"/"+year.toString()+'!';
+	cookie = getCookie("weekreview");
+	if(cookie.substr(0,4) == "time"){ 
+		weekdata = [];
+		weekdata = (cookie.substr(4,cookie.length-1)).split('|');}
+
+	return weekdata;
+}
+
+function createcookie(){
+	weekdata = readcookie();
+	while (weekdata.length > 28){ //delete if data is too old.
+		weekdata.shift();
+	}
+
+
+	if (weekdata.length != 0){
+		if( weekdata[weekdata.length-1].substr(0,daymonth.length) == daymonth){ // check if the last imput from a cookie is from today, if it is, than edit it, else creat it
+			weekdata[weekdata.length-1] = daymonth + a.join(':'); //todays data already exists
+		}
+		else{
+			weekdata.push(daymonth + a.join(':'));} //welcome back user
+
+	}
+	else{
+		weekdata.push(daymonth + a.join(':'));}
+	newcookie = "time"+weekdata.join('|');
+	setCookie("weekreview",newcookie);
+
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+function setCookie(cname, cvalue) {
+  var d = new Date();
+  d.setTime(d.getTime() + (29*24*60*60*1000)); //will be saved for 29 days of inactivity, but after that its not even visible anymore, so we can delete it
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/" +";";
+}
+
 
 function draw() {
 	frameRate(10);
@@ -219,13 +329,13 @@ function draw() {
 	wh = Math.floor(work/60);
 	wm = work-wh*60;
 	fill(WHITE);
-	text("𝚝𝚘𝚝𝚊𝚕 𝚠𝚘𝚛𝚔 𝚝𝚒𝚖𝚎: "+ addZero(wh) +":"+ addZero(wm),20, Y-20);
+	text("𝚝𝚘𝚝𝚊𝚕 𝚝𝚒𝚖𝚎: "+ wh +"𝚑, "+ wm +"𝚖",20, Y-20);
 	if (goal > 0){
 		gg = goal*60-work;
 		if (gg>0){
 			gh = Math.floor(gg/60);
 			gm = gg - gh*60;
-			text(addZero(gh)+":"+addZero(gm)+" 𝚕𝚎𝚏𝚝", X-200,Y-20);}
+			text(gh +"𝚑, "+ gm +"𝚖 𝚕𝚎𝚏𝚝", X-240,Y-20);}
 		else{
 			fill(BLUE);
 			text("(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧", X-260,Y-20);
