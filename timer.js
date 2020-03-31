@@ -72,12 +72,12 @@ function setup(){
 	button6.style("font-size", 20+"px");
 	button6.mousePressed(reviewpage);
 
-	button7 = createButton("clear");
+	button7 = createButton("𝚌𝚕𝚎𝚊𝚛");
 	button7.parent('timer');
 	button7.position(X/2-70,Y-45);
 	button7.style("background-color",BACKGROUND);
 	button7.style("color", WHITE);
-	button7.style("font-size", 20+"px");
+	button7.style("font-size", 17+"px");
 	button7.mousePressed(clearday);
 
 
