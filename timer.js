@@ -145,7 +145,7 @@ function windowResized() {
 	button4.position(200,Y-84);
 	button5.position(X-220,2);
 	button6.position(X-220,34);
-	button7.position(X/2-70,Y-45);
+	button7.position(X/2,Y-45);
 
 	R = Math.min(X,Y);
 }
@@ -178,6 +178,8 @@ function darkmode(){
 	button4.style("background-color",BACKGROUND);
 	button5.style("background-color",BACKGROUND);
 	button6.style("background-color",BACKGROUND);
+	button7.style("background-color",BACKGROUND);
+
 
 
 }
