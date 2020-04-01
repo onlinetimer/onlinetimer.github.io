@@ -205,8 +205,8 @@ function delo(){
 function readcookie(){
 	d = new Date();
 	weekdata = [];
-	month = d.getMonth();
-	day = d.getDate() - 0;
+	month = d.getMonth()+1; //because january is 0
+	day = d.getDate();
 	year = d.getFullYear();
 	daymonth = addZero(month).toString()+"/"+addZero(day).toString()+"/"+year.toString()+'!';
 	cookie = getCookie("weekreview");
