@@ -85,6 +85,7 @@ function setup(){
 	if (a.length == 0){
 		delo();
 	}
+	work = 0;
 	wk = 0;
 	wrn = false;
 	wst = false;
@@ -281,22 +282,25 @@ function draw() {
 
 	for (i = 0; i < a.length; i++){
 		if (a[i] > ctime){ // midnight!! weird bugs appear when clock jumps to 0, so the page just reloads
+			a = [0];
+			createcookie();
 			window.location.reload(false);
-			a = [0];} //this was added, since it wasnt able to refresh.. to many request per second..
+
+			} //this was added, since it wasnt able to refresh.. to many request per second..
 		if (i == 0 && a[i] != 0){ // draw arc from the start of the day to the first time stamp  it must not be zero since that's midnight, and 0 to 0 draws a full circle
 			stroke(WHITE);
 			fill(WHITE)
 			arc(X/2, Y/2, R/1.2,R/1.2, (-PI/2), (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 
 		}
-		else if(i%2 == 0 && a[i-1]!=a[i]){
+		else if(i%2 == 0 && a[i-1]!=a[i] && a[i] != 0){
 			stroke(GREEN);
 			fill(GREEN);
 			arc(X/2, Y/2, R/1.2,R/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 			if (i != a.length){
 				work += (a[i] - a[i-1]);}
 		}
-		else if(i%2 == 1 && a[i-1]!=a[i]){
+		else if(i%2 == 1 && a[i-1]!=a[i]  && a[i] != 0){
 			stroke(WHITE);
 			fill(WHITE);
 			arc(X/2, Y/2, R/1.2,R/1.2,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);

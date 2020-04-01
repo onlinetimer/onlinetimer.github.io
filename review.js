@@ -168,14 +168,14 @@ function draw1day(a,loc){
 			arc(0,0, R,R, (-PI/2), (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 
 		}
-		else if(i%2 == 0 && a[i-1]!=a[i]){
+		else if(i%2 == 0 && a[i-1]!=a[i] && a[i] != 0){
 			stroke(GREEN);
 			fill(GREEN);
 			arc(0,0, R,R,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
 			if (i != a.length){
 				work += (a[i] - a[i-1]);}
 		}
-		else if(i%2 == 1 && a[i-1]!=a[i]){
+		else if(i%2 == 1 && a[i-1]!=a[i] && a[i] != 0){
 			stroke(WHITE);
 			fill(WHITE);
 			arc(0,0, R,R,  (-PI/2)+ ((a[i-1])/(24*60)) *(2*PI),  (-PI/2)+ ((a[i])/(24*60)) *(2*PI) , PIE);
