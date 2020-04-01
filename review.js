@@ -83,6 +83,9 @@ function update(){
 
 	d = new Date();
 	day = d.getDay();
+	if (day == 0){
+		day = 7;  // because I want sunday to be the last day of the week not the first 
+	}
 	for(g = 0; g < 7-day; g++){
 		reviewdata.push("empty_day");
 	}
