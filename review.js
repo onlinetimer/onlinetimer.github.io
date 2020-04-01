@@ -3,6 +3,12 @@ X = 880-40;
 Y = 1710;
 work = 0;
 
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
 
 function setup(){
 	myCanvas = createCanvas(X,Y );
@@ -71,12 +77,23 @@ function update(){
 			for(n = 1; n< numofempty;n++){
 				reviewdata.push("empty_day");
 			}
-		reviewdata.push((weekdata[i].substr(11,weekdata[i].length)).split(':').map(Number));
+			reviewdata.push((weekdata[i].substr(11,weekdata[i].length)).split(':').map(Number));
 	}}
 	//console.log("reviewdata",reviewdata);
 	background(BACKGROUND);
 
-
+	d = new Date();
+	month = d.getMonth()+1; //because january is 0
+	day = d.getDate();
+	year = d.getFullYear();
+	daymonth = addZero(month).toString()+"/"+addZero(day).toString()+"/"+year.toString();
+	
+	firstday = Date.parse(weekdata[weekdata.length-1].substr(0,10));  
+	secondday = Date.parse(daymonth);
+	numofempty = Math.floor((secondday-firstday)/86400000);
+		for(n = 0; n< numofempty;n++){
+			reviewdata.push("empty_day");  // add for inactive days since the last use.(this only makes a diffence if you didnt visit timer page at all on this day.)
+		}
 
 
 	d = new Date();
