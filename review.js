@@ -67,9 +67,7 @@ function update(){
 		for(i = 1; i < weekdata.length ; i ++){ //calculate how many days was user inactive
 			firstday = Date.parse(weekdata[i-1].substr(0,10));
 			secondday =  Date.parse(weekdata[i].substr(0,10));
-			console.log("firstday",firstday);
 			numofempty = Math.floor((secondday-firstday)/86400000);
-			console.log("numofempty", numofempty);
 			for(n = 1; n< numofempty;n++){
 				reviewdata.push("empty_day");
 			}
