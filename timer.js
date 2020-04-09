@@ -198,7 +198,7 @@ function delo(){
 	sec = d.getSeconds();
 	ctime = hour*60+minute;
 	a.push(ctime);
-	if (a.length >= 3){
+	if (a.length >= 4){
 		if (a[a.length-3] == a[a.length-2]){
 			a.splice(a.length-3,2); // if you clicked the start/stop 3 times in the same minute, we can safely remove those timestamps to save space in a cookie		
 		}}
